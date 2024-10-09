@@ -61,6 +61,10 @@ void	start_loop(t_env *env_list)
 			free(line);
 			break ;
 		}
+		if (ft_strcmp(line, "ex") == 0)
+		{
+			exit_status(33);
+		}
 		ft_parsing(line, &cp_list, env_list);
 		cmd_list = NULL;
 		ft_merge(&cmd_list, cp_list, env_list);

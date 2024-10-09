@@ -6,7 +6,7 @@
 /*   By: mohmazou <mohmazou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/07 06:24:23 by mohmazou          #+#    #+#             */
-/*   Updated: 2024/10/08 09:40:49 by mohmazou         ###   ########.fr       */
+/*   Updated: 2024/10/09 09:30:57 by mohmazou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,14 +75,16 @@ char	*get_del(char *redir)
 	return (del);
 }
 
-char	*get_buffer(char *del)
+char	*get_buffer(int *s,char *del)
 {
 	char	*line;
 	char	*buffer;
-
+	int fd_dup;
 	buffer = NULL;
+	fd_dup = dup(0);
 	while (1)
 	{
+		signal(SIGINT, ft_sig_herdoc);
 		line = readline("> ");
 		if (!line)
 			break ;
@@ -95,10 +97,16 @@ char	*get_buffer(char *del)
 		buffer = ft_strjoin(buffer, "\n");
 		free(line);
 	}
+	dup2(fd_dup, 0);
+	if (exit_status(-1) == -1337)
+	{
+		*s = -1337;
+		exit_status(1);
+	}
 	return (buffer);
 }
 
-void	herdoc_hundeler(t_p_cmd **new_cmd,t_env *env)
+void	herdoc_hundeler(t_p_cmd **new_cmd,t_env *env, int *sig_flag)
 {
 	t_p_cmd	*cmd;
 	int		i;
@@ -111,14 +119,14 @@ void	herdoc_hundeler(t_p_cmd **new_cmd,t_env *env)
 	i = 0;
 	if (!cmd || !cmd->redir)
 		return ;
-	while (cmd->redir[i])
+	while (cmd->redir[i] && *sig_flag != -1337)
 	{
 		if (to_herdoc(cmd->redir[i]))
 		{
 			del = get_del(cmd->redir[i]);
 			file_name = gnrt_name();
 			fd = open(file_name, O_WRONLY | O_CREAT | O_TRUNC, 0644);
-			buffer = get_buffer(del);
+			buffer = get_buffer( sig_flag,del);
 			write(fd, buffer, ft_strlen(buffer));
 			close(fd);
 			cmd->redir[i] = ft_strjoin(">>",file_name);

@@ -108,9 +108,8 @@ void	get_line(char *line, t_p_cmd *cp_list, t_env *env_list)
 	new_line = NULL;
 	rd = get_rd(line, 0, 0);
 	new_line = line_no_rd(line, 0, 0);
-	// if (ft_strchr(new_line, '$'))
 	if (to_expand(new_line))
-		new_line = expd_line(new_line, env_list);
+		new_line = expd_line(new_line, env_list, cp_list->pipe_line);
 	cp_list->line = new_line;
 	cp_list->redir = rd;
 	cp_list->cmd = ft_split_cmd(new_line, ' ', 0, 0);
