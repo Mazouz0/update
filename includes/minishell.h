@@ -59,8 +59,7 @@ typedef struct s_utils
 	char	*new_line;
 	int		sq;
 	int		dq;
-	int		*fds_in;
-	int		*fds_out;
+	int		*fds_tab;
 	char	*f_name;
 	int		status;
 	int		len;
@@ -127,10 +126,10 @@ void	ft_merge(t_cmd **cmd_list, t_p_cmd *cp_list, t_env *env_list);
 t_cmd	*ft_new_cmd(t_p_cmd *cp_cmd, t_env *env_list);
 void	cmd_add_back(t_cmd **cmd_list, t_cmd *new_cmd);
 char	*rm_qot(char *str, int s_q, int d_q);
-void	close_tab(int *fd_tab, int size);
-void	open_red(char **redir, int *fd_in, int *fd_out,t_env *env);
-int		open_in(char **in_redir, t_env *env);
-int		open_out(char **out_redir, t_env *env);
+void	close_tab(int *fd_tab, int size, int in, int out);
+void	open_red(t_p_cmd *cmd, int *fd_in, int *fd_out,t_env *env);
+int		open_in(char **in_redir, t_env *env); //itmsa7
+int		open_out(char **out_redir, t_env *env); //itmsa7
 char	*get_f_name(char *f_name, t_env *env, int pipe_line);
 char	*expd_rd(char *f_name, t_env *env, int pipe_line);
 char    **empty_env(void);
@@ -138,7 +137,8 @@ int		exit_status(int status);
 void	ft_handle_signals(void);
 int		ft_maxsize(t_env *env_list, int flag);
 void	herdoc_hundeler(t_p_cmd **cmd,t_env *env, int *sig_flag);
-void ft_sig_herdoc(int sig);
+void	ft_sig_herdoc(int sig);
+int		to_expand(char *line);
 
 
 // env_utils_1.c

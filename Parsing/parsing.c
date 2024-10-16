@@ -99,6 +99,5 @@ void	ft_parsing(char *line, t_p_cmd **cp_list, t_env *env_list)
 	{
 		herdoc_hundeler(&cmd_list, env_list, &sig_flag);
 		cmd_list = cmd_list->next;
-
 	}
 }

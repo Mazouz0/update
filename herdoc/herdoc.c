@@ -6,7 +6,7 @@
 /*   By: mohmazou <mohmazou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/07 06:24:23 by mohmazou          #+#    #+#             */
-/*   Updated: 2024/10/09 09:30:57 by mohmazou         ###   ########.fr       */
+/*   Updated: 2024/10/16 14:58:11 by mohmazou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -129,7 +129,7 @@ void	herdoc_hundeler(t_p_cmd **new_cmd,t_env *env, int *sig_flag)
 			buffer = get_buffer( sig_flag,del);
 			write(fd, buffer, ft_strlen(buffer));
 			close(fd);
-			cmd->redir[i] = ft_strjoin(">>",file_name);
+			cmd->redir[i] = ft_strjoin("<<",file_name);
 		}
 		i ++;
 	}

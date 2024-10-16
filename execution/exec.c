@@ -30,6 +30,10 @@ void    ft_execut_cmd(t_cmd *cmd_list, t_env **env_list)
 	int		fd[2];
 	int		saves[2];
 
+// printf("**executing cmd\n");
+// printf("**cmd_list->fd_in = %d\n", cmd_list->fd_in);
+// printf("**cmd_list->fd_out = %d\n", cmd_list->fd_out);
+
 	tmp = cmd_list;
 	saves[0] = dup(STDIN_FILENO);
 	saves[1] = dup(STDOUT_FILENO);
